@@ -1,0 +1,55 @@
+========================================================================
+ MINE VENTILATION TUNNEL (90-deg bend) - CFD + ML RESULTS SUMMARY
+========================================================================
+
+1) MESH STUDY  (inlet pressure averaged over iterations 300-559)
+   Mesh         Cells  Last it.   Mean p [Pa]   Std [Pa]    Change
+   Coarse      69,202      1000        9.1596     1.0736         -
+   Medium     197,202      1000        8.8180     0.5620    -3.73%
+   Fine       466,684       559        8.7476     0.8406    -0.80%
+
+2) VALIDATION  (straight 4x4 m duct, v = 3 m/s, L = 40 m)
+   Reynolds number            Re = 821,504
+   Petukhov friction factor    f = 0.01203
+   CFD dp (iteration 179)     = 0.6434 Pa
+   Darcy-Weisbach dp          = 0.6629 Pa
+   Error                      = -2.95 %
+
+3) PARAMETRIC SWEEP  (9 design points, excluded: DP 0)
+   DP       R [m]  v [m/s]   dp [Pa]   K [-]          Re
+   DP 1      0.50      2.0    2.3574   0.962   5.477e+05
+   DP 2      0.50      4.0    8.4787   0.865   1.095e+06
+   DP 3      0.50      6.0   18.5150   0.840   1.643e+06
+   DP 4      1.50      2.0    2.2386   0.914   5.477e+05
+   DP 5      1.50      4.0    8.7869   0.897   1.095e+06
+   DP 6      1.50      6.0   13.3983   0.608   1.643e+06
+   DP 7      3.00      2.0    2.6298   1.073   5.477e+05
+   DP 8      3.00      4.0    7.3037   0.745   1.095e+06
+   DP 10     3.00      6.0   14.5375   0.659   1.643e+06
+
+4) ML SURROGATE  (leave-one-out cross-validation on dp)
+   MLP (2-8-1 tanh, ensemble of 5) MAPE = 19.61 %
+   Linear regression baseline           MAPE = 12.80 %
+   Constant K per radius (physics)      MAPE = 21.66 %
+
+   DP        CFD dp      MLP     err   Linear     err  Const K     err
+   DP 1       2.357    1.963  -16.7%    2.596  +10.1%    2.088  -11.4%
+   DP 2       8.479    9.956  +17.4%    8.174   -3.6%    8.829   +4.1%
+   DP 3      18.515   14.623  -21.0%   14.923  -19.4%   20.147   +8.8%
+   DP 4       2.239    2.731  +22.0%    2.522  +12.7%    1.843  -17.7%
+   DP 5       8.787    7.062  -19.6%    7.934   -9.7%    7.455  -15.2%
+   DP 6      13.398   18.578  +38.7%   16.647  +24.2%   19.959  +49.0%
+   DP 7       2.630    2.076  -21.1%    2.088  -20.6%    1.721  -34.6%
+   DP 8       7.304    7.804   +6.9%    7.886   +8.0%    8.490  +16.2%
+   DP 10     14.538   12.630  -13.1%   15.535   +6.9%   20.051  +37.9%
+
+   Single surrogate prediction : 0.460 ms
+   Single CFD design point     : 2.5 h (9,000 s)
+   Speed-up                    : ~2.0e+07 x
+
+5) FIGURES
+   figures\fig1_mesh_study.png
+   figures\fig2_validation.png
+   figures\fig3_design_curves.png
+   figures\fig4_pred_vs_actual.png
+========================================================================
